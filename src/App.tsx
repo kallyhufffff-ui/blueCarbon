@@ -188,7 +188,7 @@ const HerrySprite: React.FC<HerrySpriteProps> = ({ mood = 'happy', className = '
       ? { y: [0, -15, 0], scale: [1, 1.05, 1], transition: { repeat: Infinity, duration: 0.6 } }
       : mood === 'sad'
       ? { y: 5, scale: 0.95, transition: { duration: 0.3 } }
-      : { y: [0, -6, 0], transition: { repeat: Infinity, duration: 2.5, ease: 'easeInOut' } };
+      : { y: [0, -6, 0], transition: { repeat: Infinity, duration: 2.5, ease: 'easeInOut'  as const} };
 
   return (
     <motion.div
