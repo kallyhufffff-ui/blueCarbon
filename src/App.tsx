@@ -16,8 +16,26 @@ import {
   Trophy,
 } from 'lucide-react';
 
+// ================= TYPES =================
+interface Quiz {
+  q: string;
+  options: string[];
+  correct: number;
+  exp: string;
+}
+
+interface LevelData {
+  id: number;
+  title: string;
+  subtitle: string;
+  videoUrl: string;
+  isYouTube: boolean;
+  preQuiz: Quiz[];
+  postQuiz: Quiz[];
+}
+
 // ================= MOCK DATA =================
-const LEVELS_DATA = [
+const LEVELS_DATA: LevelData[] = [
   {
     id: 1,
     title: 'Lesson 1',
@@ -115,32 +133,19 @@ const LEVELS_DATA = [
 ];
 
 const MOCK_FRIENDS = [
-  {
-    id: 1,
-    name: 'Ocean Breeze',
-    points: 1250,
-    streak: 12,
-    avatarColor: 'bg-sky-400',
-  },
-  {
-    id: 2,
-    name: 'Eco Warrior',
-    points: 980,
-    streak: 5,
-    avatarColor: 'bg-indigo-400',
-  },
-  {
-    id: 3,
-    name: 'Carbon Master',
-    points: 850,
-    streak: 3,
-    avatarColor: 'bg-blue-400',
-  },
+  { id: 1, name: 'Ocean Breeze', points: 1250, streak: 12, avatarColor: 'bg-sky-400' },
+  { id: 2, name: 'Eco Warrior', points: 980, streak: 5, avatarColor: 'bg-indigo-400' },
+  { id: 3, name: 'Carbon Master', points: 850, streak: 3, avatarColor: 'bg-blue-400' },
 ];
 
 // ================= COMPONENTS =================
 
-const BottomNav = ({ currentTab, setCurrentTab }) => (
+interface BottomNavProps {
+  currentTab: string;
+  setCurrentTab: (tab: string) => void;
+}
+
+const BottomNav: React.FC<BottomNavProps> = ({ currentTab, setCurrentTab }) => (
   <div className="fixed bottom-0 w-full max-w-md bg-white border-t border-blue-100 flex justify-around py-3 z-50 rounded-t-2xl shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
     <button
       onClick={() => setCurrentTab('home')}
@@ -148,10 +153,7 @@ const BottomNav = ({ currentTab, setCurrentTab }) => (
         currentTab === 'home' ? 'text-blue-600' : 'text-slate-400'
       }`}
     >
-      <Home
-        size={24}
-        className={currentTab === 'home' ? 'drop-shadow-md' : ''}
-      />
+      <Home size={24} className={currentTab === 'home' ? 'drop-shadow-md' : ''} />
       <span className="text-xs mt-1 font-medium">Home</span>
     </button>
     <button
@@ -160,10 +162,7 @@ const BottomNav = ({ currentTab, setCurrentTab }) => (
         currentTab === 'map' ? 'text-blue-600' : 'text-slate-400'
       }`}
     >
-      <MapIcon
-        size={24}
-        className={currentTab === 'map' ? 'drop-shadow-md' : ''}
-      />
+      <MapIcon size={24} className={currentTab === 'map' ? 'drop-shadow-md' : ''} />
       <span className="text-xs mt-1 font-medium">Adventure</span>
     </button>
     <button
@@ -172,30 +171,24 @@ const BottomNav = ({ currentTab, setCurrentTab }) => (
         currentTab === 'community' ? 'text-blue-600' : 'text-slate-400'
       }`}
     >
-      <Users
-        size={24}
-        className={currentTab === 'community' ? 'drop-shadow-md' : ''}
-      />
+      <Users size={24} className={currentTab === 'community' ? 'drop-shadow-md' : ''} />
       <span className="text-xs mt-1 font-medium">Community</span>
     </button>
   </div>
 );
 
-// 修改点 1：增加 className 参数，默认是 w-32 h-32，这样可以在不同地方复用不同大小
-const HerrySprite = ({ mood = 'happy', className = 'w-32 h-32' }) => {
+interface HerrySpriteProps {
+  mood?: 'happy' | 'excited' | 'sad';
+  className?: string;
+}
+
+const HerrySprite: React.FC<HerrySpriteProps> = ({ mood = 'happy', className = 'w-32 h-32' }) => {
   const animation =
     mood === 'excited'
-      ? {
-          y: [0, -15, 0],
-          scale: [1, 1.05, 1],
-          transition: { repeat: Infinity, duration: 0.6 },
-        }
+      ? { y: [0, -15, 0], scale: [1, 1.05, 1], transition: { repeat: Infinity, duration: 0.6 } }
       : mood === 'sad'
       ? { y: 5, scale: 0.95, transition: { duration: 0.3 } }
-      : {
-          y: [0, -6, 0],
-          transition: { repeat: Infinity, duration: 2.5, ease: 'easeInOut' },
-        };
+      : { y: [0, -6, 0], transition: { repeat: Infinity, duration: 2.5, ease: 'easeInOut' } };
 
   return (
     <motion.div
@@ -213,37 +206,38 @@ const HerrySprite = ({ mood = 'happy', className = 'w-32 h-32' }) => {
 
 // ================= MAIN APP =================
 export default function BlueCarbonApp() {
-  const [currentTab, setCurrentTab] = useState('home');
-  const [hasCheckedIn, setHasCheckedIn] = useState(false);
-  const [points, setPoints] = useState(120);
-  const [streak, setStreak] = useState(3);
-  const [currentLevel, setCurrentLevel] = useState(1);
+  const [currentTab, setCurrentTab] = useState<string>('home');
+  const [hasCheckedIn, setHasCheckedIn] = useState<boolean>(false);
+  const [points, setPoints] = useState<number>(120);
+  const [streak, setStreak] = useState<number>(3);
+  const [currentLevel, setCurrentLevel] = useState<number>(1);
 
-  const [activeLevel, setActiveLevel] = useState(null);
-  const [lessonPhase, setLessonPhase] = useState('pre-quiz');
-  const [qIndex, setQIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [quizState, setQuizState] = useState('answering');
-  const [spriteMood, setSpriteMood] = useState('happy');
+  const [activeLevel, setActiveLevel] = useState<LevelData | null>(null);
+  const [lessonPhase, setLessonPhase] = useState<'pre-quiz' | 'video' | 'post-quiz'>('pre-quiz');
+  const [qIndex, setQIndex] = useState<number>(0);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [quizState, setQuizState] = useState<'answering' | 'result'>('answering');
+  const [spriteMood, setSpriteMood] = useState<'happy' | 'excited' | 'sad'>('happy');
 
-  const startLevel = (levelId) => {
+  const startLevel = (levelId: number) => {
     if (levelId > currentLevel) return;
     const level = LEVELS_DATA.find((l) => l.id === levelId);
-    setActiveLevel(level);
-    setLessonPhase('pre-quiz');
-    setQIndex(0);
-    setSelectedOption(null);
-    setQuizState('answering');
-    setCurrentTab('lesson');
-    setSpriteMood('happy');
+    if (level) {
+      setActiveLevel(level);
+      setLessonPhase('pre-quiz');
+      setQIndex(0);
+      setSelectedOption(null);
+      setQuizState('answering');
+      setCurrentTab('lesson');
+      setSpriteMood('happy');
+    }
   };
 
   const submitAnswer = () => {
-    if (selectedOption === null) return;
+    if (selectedOption === null || !activeLevel) return;
     setQuizState('result');
 
-    const currentQuiz =
-      lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz;
+    const currentQuiz = lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz;
     const isCorrect = selectedOption === currentQuiz[qIndex].correct;
 
     if (isCorrect) {
@@ -255,8 +249,8 @@ export default function BlueCarbonApp() {
   };
 
   const nextStep = () => {
-    const currentQuiz =
-      lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz;
+    if (!activeLevel) return;
+    const currentQuiz = lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz;
     const isCorrect = selectedOption === currentQuiz[qIndex].correct;
 
     if (isCorrect) {
@@ -303,24 +297,14 @@ export default function BlueCarbonApp() {
               <Droplets size={20} className="text-sky-100" />
             </div>
             <div>
-              <h1 className="font-bold text-lg leading-tight tracking-wide">
-                Blue Carbon
-              </h1>
-              <p className="text-xs text-sky-100 opacity-90">
-                Lv.{currentLevel} Guardian
-              </p>
+              <h1 className="font-bold text-lg leading-tight tracking-wide">Blue Carbon</h1>
+              <p className="text-xs text-sky-100 opacity-90">Lv.{currentLevel} Guardian</p>
             </div>
           </div>
           <div className="flex flex-col items-end bg-black/15 px-3 py-1.5 rounded-xl backdrop-blur-sm">
-            <span className="text-sky-100 text-[10px] font-medium mb-0.5">
-              Carbon Points
-            </span>
+            <span className="text-sky-100 text-[10px] font-medium mb-0.5">Carbon Points</span>
             <span className="flex items-center font-bold text-sm">
-              <Star
-                size={14}
-                className="mr-1 text-yellow-300 fill-yellow-300"
-              />{' '}
-              {points}
+              <Star size={14} className="mr-1 text-yellow-300 fill-yellow-300" /> {points}
             </span>
           </div>
         </div>
@@ -337,7 +321,6 @@ export default function BlueCarbonApp() {
                 exit={{ opacity: 0, x: -20 }}
                 className="p-5 space-y-6"
               >
-                {/* Herry Interaction Area */}
                 <div className="relative bg-gradient-to-b from-sky-50 to-blue-50 rounded-3xl p-6 text-center border border-blue-100 shadow-inner">
                   <HerrySprite mood={spriteMood} />
                   <div className="bg-white p-3 rounded-2xl rounded-tl-none inline-block shadow-md text-sm text-slate-600 relative mt-2 border border-blue-50">
@@ -350,7 +333,6 @@ export default function BlueCarbonApp() {
                   </div>
                 </div>
 
-                {/* Daily Mission (Auto Check-in) */}
                 <div className="bg-white rounded-2xl p-5 shadow-sm border border-blue-100">
                   <div className="flex justify-between items-end mb-4">
                     <div>
@@ -359,12 +341,8 @@ export default function BlueCarbonApp() {
                         Daily Mission
                       </h2>
                       <p className="text-xs text-slate-500 mt-1 flex items-center">
-                        Guarding for{' '}
-                        <Flame size={14} className="text-orange-500 mx-1" />{' '}
-                        <strong className="text-orange-500 text-sm">
-                          {streak}
-                        </strong>{' '}
-                        days
+                        Guarding for <Flame size={14} className="text-orange-500 mx-1" />{' '}
+                        <strong className="text-orange-500 text-sm">{streak}</strong> days
                       </p>
                     </div>
                     <div
@@ -386,7 +364,6 @@ export default function BlueCarbonApp() {
                     </div>
                   </div>
 
-                  {/* 7-Day Streak Tracker */}
                   <div className="flex justify-between mt-4">
                     {[0, 1, 2, 3, 4, 5, 6].map((day) => {
                       const isPast = day < streak - (hasCheckedIn ? 1 : 0);
@@ -404,15 +381,9 @@ export default function BlueCarbonApp() {
                                 : 'bg-slate-100 text-slate-400'
                             }`}
                           >
-                            {isPast || isCheckedToday ? (
-                              <CheckCircle size={16} />
-                            ) : (
-                              day + 1
-                            )}
+                            {isPast || isCheckedToday ? <CheckCircle size={16} /> : day + 1}
                           </div>
-                          <span className="text-[10px] text-slate-400">
-                            Day {day + 1}
-                          </span>
+                          <span className="text-[10px] text-slate-400">Day {day + 1}</span>
                         </div>
                       );
                     })}
@@ -430,18 +401,13 @@ export default function BlueCarbonApp() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 className="p-5 min-h-full bg-sky-50 relative"
                 style={{
-                  backgroundImage:
-                    'radial-gradient(#bae6fd 1px, transparent 1px)',
+                  backgroundImage: 'radial-gradient(#bae6fd 1px, transparent 1px)',
                   backgroundSize: '20px 20px',
                 }}
               >
                 <div className="text-center mb-6">
-                  <h2 className="text-xl font-bold text-blue-900">
-                    Carbon Adventure
-                  </h2>
-                  <p className="text-xs text-blue-600 mt-1">
-                    Complete lessons to unlock knowledge
-                  </p>
+                  <h2 className="text-xl font-bold text-blue-900">Carbon Adventure</h2>
+                  <p className="text-xs text-blue-600 mt-1">Complete lessons to unlock knowledge</p>
                 </div>
 
                 {currentLevel > LEVELS_DATA.length ? (
@@ -451,16 +417,10 @@ export default function BlueCarbonApp() {
                     className="bg-white p-6 rounded-3xl shadow-xl text-center border-2 border-yellow-300 relative overflow-hidden mt-10"
                   >
                     <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-300"></div>
-                    <Trophy
-                      size={48}
-                      className="text-yellow-400 mx-auto mb-4"
-                    />
-                    <h3 className="text-2xl font-bold text-slate-800 mb-2">
-                      Congratulations!
-                    </h3>
+                    <Trophy size={48} className="text-yellow-400 mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold text-slate-800 mb-2">Congratulations!</h3>
                     <p className="text-sm text-slate-600 mb-6">
-                      You have mastered all the basic Blue Carbon knowledge.
-                      Herry is so proud of you!
+                      You have mastered all the basic Blue Carbon knowledge. Herry is so proud of you!
                     </p>
                     <HerrySprite mood="excited" />
                     <button
@@ -505,17 +465,12 @@ export default function BlueCarbonApp() {
                             {isCompleted ? (
                               <CheckCircle size={28} />
                             ) : isCurrent ? (
-                              <Star
-                                size={28}
-                                className="text-yellow-300 fill-yellow-300"
-                              />
+                              <Star size={28} className="text-yellow-300 fill-yellow-300" />
                             ) : (
                               <Lock size={28} />
                             )}
 
-                            <span className="font-bold mt-2 text-sm">
-                              {level.title}
-                            </span>
+                            <span className="font-bold mt-2 text-sm">{level.title}</span>
                             <span className="text-[10px] mt-1 opacity-90 text-center leading-tight">
                               {level.subtitle}
                             </span>
@@ -551,15 +506,11 @@ export default function BlueCarbonApp() {
                 <div className="bg-gradient-to-r from-indigo-500 to-blue-500 rounded-2xl p-5 text-white shadow-lg flex justify-between items-center">
                   <div>
                     <h2 className="font-bold text-lg">My Rank</h2>
-                    <p className="text-xs text-indigo-100 mt-1">
-                      Top 25% of Guardians
-                    </p>
+                    <p className="text-xs text-indigo-100 mt-1">Top 25% of Guardians</p>
                   </div>
                   <div className="text-right">
                     <div className="text-2xl font-black italic">{points}</div>
-                    <div className="text-[10px] text-indigo-100">
-                      Total Points
-                    </div>
+                    <div className="text-[10px] text-indigo-100">Total Points</div>
                   </div>
                 </div>
 
@@ -581,33 +532,21 @@ export default function BlueCarbonApp() {
                         className="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between"
                       >
                         <div className="flex items-center space-x-3">
-                          <div className="font-bold text-slate-300 w-4 text-center">
-                            {idx + 1}
-                          </div>
+                          <div className="font-bold text-slate-300 w-4 text-center">{idx + 1}</div>
                           <div
                             className={`w-10 h-10 rounded-full ${friend.avatarColor} flex items-center justify-center text-white font-bold shadow-inner`}
                           >
                             {friend.name.charAt(0)}
                           </div>
                           <div>
-                            <div className="font-bold text-sm text-slate-700">
-                              {friend.name}
-                            </div>
+                            <div className="font-bold text-sm text-slate-700">{friend.name}</div>
                             <div className="text-[10px] text-slate-500 flex items-center mt-0.5">
-                              Streak: {friend.streak} days{' '}
-                              <Flame
-                                size={10}
-                                className="text-orange-400 ml-1"
-                              />
+                              Streak: {friend.streak} days <Flame size={10} className="text-orange-400 ml-1" />
                             </div>
                           </div>
                         </div>
                         <div className="font-bold text-blue-600 text-sm flex items-center">
-                          {friend.points}{' '}
-                          <Star
-                            size={12}
-                            className="ml-1 text-yellow-400 fill-yellow-400"
-                          />
+                          {friend.points} <Star size={12} className="ml-1 text-yellow-400 fill-yellow-400" />
                         </div>
                       </div>
                     ))}
@@ -624,7 +563,6 @@ export default function BlueCarbonApp() {
                 animate={{ opacity: 1, y: 0 }}
                 className="p-6 h-full flex flex-col bg-white"
               >
-                {/* Progress Header */}
                 <div className="mb-6">
                   <div className="flex justify-between text-xs font-bold text-slate-400 mb-2">
                     <span>{activeLevel.title}</span>
@@ -637,42 +575,20 @@ export default function BlueCarbonApp() {
                     </span>
                   </div>
                   <div className="flex space-x-2">
+                    <div className={`h-2 flex-1 rounded-full ${lessonPhase === 'pre-quiz' ? 'bg-blue-500' : 'bg-blue-200'}`} />
                     <div
                       className={`h-2 flex-1 rounded-full ${
-                        lessonPhase === 'pre-quiz'
-                          ? 'bg-blue-500'
-                          : 'bg-blue-200'
+                        lessonPhase === 'video' ? 'bg-blue-500' : lessonPhase === 'post-quiz' ? 'bg-blue-200' : 'bg-slate-100'
                       }`}
                     />
-                    <div
-                      className={`h-2 flex-1 rounded-full ${
-                        lessonPhase === 'video'
-                          ? 'bg-blue-500'
-                          : lessonPhase === 'post-quiz'
-                          ? 'bg-blue-200'
-                          : 'bg-slate-100'
-                      }`}
-                    />
-                    <div
-                      className={`h-2 flex-1 rounded-full ${
-                        lessonPhase === 'post-quiz'
-                          ? 'bg-blue-500'
-                          : 'bg-slate-100'
-                      }`}
-                    />
+                    <div className={`h-2 flex-1 rounded-full ${lessonPhase === 'post-quiz' ? 'bg-blue-500' : 'bg-slate-100'}`} />
                   </div>
                 </div>
 
-                {/* --- VIDEO PHASE --- */}
                 {lessonPhase === 'video' ? (
                   <div className="flex-1 flex flex-col">
-                    <h2 className="text-xl font-bold text-slate-800 mb-2">
-                      {activeLevel.subtitle}
-                    </h2>
-                    <p className="text-sm text-slate-500 mb-6">
-                      Watch the video to uncover the secrets!
-                    </p>
-
+                    <h2 className="text-xl font-bold text-slate-800 mb-2">{activeLevel.subtitle}</h2>
+                    <p className="text-sm text-slate-500 mb-6">Watch the video to uncover the secrets!</p>
                     <div className="w-full bg-black rounded-2xl overflow-hidden shadow-lg aspect-video flex items-center justify-center relative">
                       {activeLevel.isYouTube ? (
                         <iframe
@@ -695,7 +611,6 @@ export default function BlueCarbonApp() {
                         </video>
                       )}
                     </div>
-
                     <div className="mt-auto pt-6">
                       <button
                         onClick={() => {
@@ -706,35 +621,24 @@ export default function BlueCarbonApp() {
                         }}
                         className="w-full py-4 rounded-2xl font-bold text-lg text-white bg-blue-600 shadow-lg shadow-blue-200 flex justify-center items-center"
                       >
-                        Continue to Quiz{' '}
-                        <ChevronRight size={20} className="ml-1" />
+                        Continue to Quiz <ChevronRight size={20} className="ml-1" />
                       </button>
                     </div>
                   </div>
                 ) : (
-                  /* --- QUIZ PHASE --- */
                   <>
                     <div className="mb-6">
                       <h2 className="text-xl font-bold text-slate-800 leading-snug">
-                        {lessonPhase === 'pre-quiz'
-                          ? activeLevel.preQuiz[qIndex].q
-                          : activeLevel.postQuiz[qIndex].q}
+                        {lessonPhase === 'pre-quiz' ? activeLevel.preQuiz[qIndex].q : activeLevel.postQuiz[qIndex].q}
                       </h2>
                     </div>
 
                     <div className="space-y-3 flex-1">
-                      {(lessonPhase === 'pre-quiz'
-                        ? activeLevel.preQuiz
-                        : activeLevel.postQuiz)[qIndex].options.map(
+                      {(lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz)[qIndex].options.map(
                         (opt, idx) => {
-                          const currentQuiz =
-                            lessonPhase === 'pre-quiz'
-                              ? activeLevel.preQuiz
-                              : activeLevel.postQuiz;
-                          let btnClass =
-                            'w-full text-left p-4 rounded-2xl border-2 transition-all font-medium ';
-                          const isCorrectOpt =
-                            idx === currentQuiz[qIndex].correct;
+                          const currentQuiz = lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz;
+                          let btnClass = 'w-full text-left p-4 rounded-2xl border-2 transition-all font-medium ';
+                          const isCorrectOpt = idx === currentQuiz[qIndex].correct;
 
                           if (quizState === 'answering') {
                             btnClass +=
@@ -743,14 +647,11 @@ export default function BlueCarbonApp() {
                                 : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200';
                           } else {
                             if (isCorrectOpt) {
-                              btnClass +=
-                                'border-green-500 bg-green-50 text-green-700';
+                              btnClass += 'border-green-500 bg-green-50 text-green-700';
                             } else if (selectedOption === idx) {
-                              btnClass +=
-                                'border-red-400 bg-red-50 text-red-600';
+                              btnClass += 'border-red-400 bg-red-50 text-red-600';
                             } else {
-                              btnClass +=
-                                'border-slate-200 bg-slate-50 text-slate-400 opacity-50';
+                              btnClass += 'border-slate-200 bg-slate-50 text-slate-400 opacity-50';
                             }
                           }
 
@@ -763,20 +664,10 @@ export default function BlueCarbonApp() {
                             >
                               <div className="flex justify-between items-center">
                                 <span>{opt}</span>
-                                {quizState === 'result' && isCorrectOpt && (
-                                  <CheckCircle
-                                    size={20}
-                                    className="text-green-500"
-                                  />
+                                {quizState === 'result' && isCorrectOpt && <CheckCircle size={20} className="text-green-500" />}
+                                {quizState === 'result' && selectedOption === idx && !isCorrectOpt && (
+                                  <XCircle size={20} className="text-red-400" />
                                 )}
-                                {quizState === 'result' &&
-                                  selectedOption === idx &&
-                                  !isCorrectOpt && (
-                                    <XCircle
-                                      size={20}
-                                      className="text-red-400"
-                                    />
-                                  )}
                               </div>
                             </button>
                           );
@@ -791,55 +682,38 @@ export default function BlueCarbonApp() {
                           animate={{ opacity: 1, height: 'auto', y: 0 }}
                           className={`mt-6 p-4 rounded-2xl border ${
                             selectedOption ===
-                            (lessonPhase === 'pre-quiz'
-                              ? activeLevel.preQuiz
-                              : activeLevel.postQuiz)[qIndex].correct
+                            (lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz)[qIndex].correct
                               ? 'bg-green-50 border-green-100'
                               : 'bg-red-50 border-red-100'
                           }`}
                         >
-                          {/* 修改点 2：使用 gap-3 替代负边距，并给文字容器加上 flex-1 避免挤压 */}
                           <div className="flex items-start gap-3">
                             <div className="shrink-0">
-                              {/* 在这里传入 className 控制 Herry 的大小，不再溢出 */}
-                              <HerrySprite
-                                mood={spriteMood}
-                                className="w-16 h-16"
-                              />
+                              <HerrySprite mood={spriteMood} className="w-16 h-16" />
                             </div>
                             <div className="flex-1">
                               <h4
                                 className={`font-bold mb-1 ${
                                   selectedOption ===
-                                  (lessonPhase === 'pre-quiz'
-                                    ? activeLevel.preQuiz
-                                    : activeLevel.postQuiz)[qIndex].correct
+                                  (lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz)[qIndex].correct
                                     ? 'text-green-800'
                                     : 'text-red-800'
                                 }`}
                               >
                                 {selectedOption ===
-                                (lessonPhase === 'pre-quiz'
-                                  ? activeLevel.preQuiz
-                                  : activeLevel.postQuiz)[qIndex].correct
+                                (lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz)[qIndex].correct
                                   ? 'Correct!'
                                   : 'Oops, not quite!'}
                               </h4>
                               <p
                                 className={`text-xs leading-relaxed ${
                                   selectedOption ===
-                                  (lessonPhase === 'pre-quiz'
-                                    ? activeLevel.preQuiz
-                                    : activeLevel.postQuiz)[qIndex].correct
+                                  (lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz)[qIndex].correct
                                     ? 'text-green-700'
                                     : 'text-red-700'
                                 }`}
                               >
-                                {
-                                  (lessonPhase === 'pre-quiz'
-                                    ? activeLevel.preQuiz
-                                    : activeLevel.postQuiz)[qIndex].exp
-                                }
+                                {(lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz)[qIndex].exp}
                               </p>
                             </div>
                           </div>
@@ -865,17 +739,13 @@ export default function BlueCarbonApp() {
                           onClick={nextStep}
                           className={`w-full py-4 rounded-2xl font-bold text-lg text-white shadow-lg flex justify-center items-center ${
                             selectedOption ===
-                            (lessonPhase === 'pre-quiz'
-                              ? activeLevel.preQuiz
-                              : activeLevel.postQuiz)[qIndex].correct
+                            (lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz)[qIndex].correct
                               ? 'bg-blue-600 shadow-blue-200'
                               : 'bg-slate-800 shadow-slate-300'
                           }`}
                         >
                           {selectedOption ===
-                          (lessonPhase === 'pre-quiz'
-                            ? activeLevel.preQuiz
-                            : activeLevel.postQuiz)[qIndex].correct
+                          (lessonPhase === 'pre-quiz' ? activeLevel.preQuiz : activeLevel.postQuiz)[qIndex].correct
                             ? lessonPhase === 'pre-quiz'
                               ? 'Watch Video'
                               : 'Complete Lesson'
@@ -891,9 +761,7 @@ export default function BlueCarbonApp() {
           </AnimatePresence>
         </div>
 
-        {currentTab !== 'lesson' && (
-          <BottomNav currentTab={currentTab} setCurrentTab={setCurrentTab} />
-        )}
+        {currentTab !== 'lesson' && <BottomNav currentTab={currentTab} setCurrentTab={setCurrentTab} />}
       </div>
     </div>
   );
