@@ -7,8 +7,88 @@ import {
   Info
 } from 'lucide-react';
 
+// ================= TYPES & INTERFACES =================
+interface LocalizedString {
+  en: string;
+  zh: string;
+}
+
+interface LocalizedArray {
+  en: string[];
+  zh: string[];
+}
+
+interface QuizQuestion {
+  q: LocalizedString;
+  options: LocalizedArray;
+  correct: number;
+  exp: LocalizedString;
+}
+
+interface Character {
+  name: string;
+  type: string;
+}
+
+interface LevelPreview {
+  characters: Character[];
+  knowledge: LocalizedString[];
+}
+
+interface Level {
+  id: number;
+  title: string;
+  subtitle: string;
+  videoUrl: string;
+  preview: LevelPreview;
+  quiz: QuizQuestion[];
+}
+
+interface Badge {
+  id: string;
+  cat: string;
+  icon: string;
+  en: string;
+  zh: string;
+  unlocked: boolean;
+  condition: LocalizedString;
+}
+
+interface Species {
+  id: string;
+  nameEn: string;
+  nameZh: string;
+}
+
+interface ShopItem {
+  id: number;
+  icon: string;
+  en: string;
+  zh: string;
+  price: number;
+}
+
+interface Friend {
+  id: number;
+  name: string;
+  points: number;
+  streak: number;
+  avatarColor: string;
+}
+
+interface BottomNavProps {
+  currentTab: string;
+  setCurrentTab: (tab: string) => void;
+  t: Record<string, string>;
+}
+
+interface HerrySpriteProps {
+  mood?: 'happy' | 'excited' | 'sad';
+  className?: string;
+}
+
 // ================= DICTIONARY (i18n) =================
-const dict = {
+const dict: Record<'en' | 'zh', Record<string, string>> = {
   en: {
     appTitle: 'Blue Carbon',
     guardianLv: 'Lv.{lvl} Guardian',
@@ -178,13 +258,13 @@ const dict = {
 };
 
 // ================= MOCK DATA =================
-const SPECIES = [
+const SPECIES: Species[] = [
   { id: 'herry', nameEn: 'Heritiera littoralis', nameZh: '银叶树' },
   { id: 'rhizophora', nameEn: 'Rhizophora apiculata', nameZh: '红海榄' },
   { id: 'kandelia', nameEn: 'Kandelia obovata', nameZh: '秋茄' },
 ];
 
-const BADGES_DATA = [
+const BADGES_DATA: Badge[] = [
   { id: 'c1', cat: 'Course', icon: '🌱', en: 'New Explorer Badge', zh: '求知萌新徽章', unlocked: true, condition: { en: 'Complete 1 lesson', zh: '完成1节课程' } },
   { id: 'c2', cat: 'Course', icon: '📖', en: 'Erudite Master Badge', zh: '博学达人徽章', unlocked: false, condition: { en: 'Complete 5 lessons', zh: '完成5节课程' } },
   { id: 'c3', cat: 'Course', icon: '🎓', en: 'Mangrove Scholar Badge', zh: '红树学霸徽章', unlocked: false, condition: { en: 'Complete all lessons', zh: '完成所有课程' } },
@@ -202,7 +282,7 @@ const BADGES_DATA = [
   { id: 's3', cat: 'Scale', icon: '🏞️', en: 'Mangrove Curator', zh: '红树林园长徽章', unlocked: false, condition: { en: 'Reach 1000 sq meters', zh: '湿地规模达1000平米' } },
 ];
 
-const SHOP_ITEMS = [
+const SHOP_ITEMS: ShopItem[] = [
   { id: 1, icon: '🛍️', en: 'Eco Canvas Bag', zh: '环保帆布袋', price: 500 },
   { id: 2, icon: '☕', en: 'Reusable Cup', zh: '环保随行杯', price: 800 },
   { id: 3, icon: '📓', en: 'Recycled Notebook', zh: '再生纸笔记本', price: 300 },
@@ -211,7 +291,7 @@ const SHOP_ITEMS = [
   { id: 6, icon: '🧢', en: 'Sun Hat', zh: '遮阳帽', price: 600 },
 ];
 
-const LEVELS_DATA = [
+const LEVELS_DATA: Level[] = [
   {
     id: 1,
     title: 'Lesson 1',
@@ -271,17 +351,132 @@ const LEVELS_DATA = [
         exp: { en: "True.", zh: "正确。" } 
       }
     ]
+  },
+  {
+    id: 2,
+    title: 'Lesson 2',
+    subtitle: 'Kandelia obovata: The Coast Guard | 秋茄：海岸卫士',
+    videoUrl: 'https://www.youtube.com/embed/AQNe83Cwp1M',
+    preview: {
+      characters: [
+        { name: 'Mother Kandelia', type: 'Kandelia' },
+        { name: 'Kandy', type: 'Kandelia seedling' }
+      ],
+      knowledge: [
+        { en: '1. Kandelia obovata is one of the most common mangrove plants in Hong Kong.', zh: '1. 秋茄是香港最常见的红树林植物之一。' },
+        { en: '2. Its stilt roots hold the mudflat firmly and help break up wave energy.', zh: '2. 秋茄的支柱根可以牢牢抓住泥滩，并帮助分散海浪力量。' },
+        { en: '3. Kandelia obovata is viviparous: its seed sprouts on the tree and grows a long hypocotyl before falling.', zh: '3. 秋茄具有胎生现象，种子在树上发芽，长出长长的胚轴后再掉落。' }
+      ]
+    },
+    quiz: [
+      { 
+        q: { en: "What special power do Kandelia obovata’s stilt roots have?", zh: "秋茄的支柱根有什么特殊能力？" }, 
+        options: { 
+          en: ["They can hold the mudflat firmly and stop wind waves", "They absorb sunlight efficiently", "They produce sweet fruits", "They attract colorful birds"],
+          zh: ["它们可以牢牢抓住泥滩并防风消浪", "它们能高效吸收阳光", "它们能结出甜美的果实", "它们能吸引色彩斑斓的鸟类"] 
+        }, 
+        correct: 0, 
+        exp: { en: "They can hold the mudflat firmly and stop wind waves.", zh: "它们可以牢牢抓住泥滩，并帮助分散海浪力量。" } 
+      },
+      { 
+        q: { en: "What is Kandelia obovata called in mangroves?", zh: "秋茄在红树林中被称为？" }, 
+        options: { 
+          en: ["Breathing experts", "Coast Guard", "Carbon storage expert", "Flower guardian"],
+          zh: ["呼吸专家", "海岸卫士", "碳储藏专家", "护花使者"] 
+        }, 
+        correct: 1, 
+        exp: { en: "Kandelia obovata is known as the Coast Guard.", zh: "秋茄被称为海岸卫士。" } 
+      },
+      { 
+        q: { en: "Kandelia obovata is a viviparous plant.", zh: "秋茄是胎生植物。" }, 
+        options: { en: ["True", "False"], zh: ["正确", "错误"] }, 
+        correct: 0, 
+        exp: { en: "True. Its seed sprouts on the tree.", zh: "正确。它的种子在树上发芽。" } 
+      },
+      { 
+        q: { en: "Which animal can jump around on the mangrove mudflat?", zh: "哪种动物能在红树林泥滩上跳来跳去？" }, 
+        options: { 
+          en: ["Fiddler crab", "Mudskipper", "Little egret", "Sparrow"],
+          zh: ["招潮蟹", "弹涂鱼", "小白鹭", "麻雀"] 
+        }, 
+        correct: 1, 
+        exp: { en: "Mudskippers can jump around on the mudflat.", zh: "弹涂鱼能在泥滩上跳跃。" } 
+      },
+      { 
+        q: { en: "Mangroves can stop wind and waves to protect the coast.", zh: "红树林可以防风消浪保护海岸。" }, 
+        options: { en: ["True", "False"], zh: ["正确", "错误"] }, 
+        correct: 0, 
+        exp: { en: "True.", zh: "正确。" } 
+      }
+    ]
+  },
+  {
+    id: 3,
+    title: 'Lesson 3',
+    subtitle: 'Avicennia marina: The Breathing Expert | 白骨壤：呼吸专家',
+    videoUrl: 'https://www.youtube.com/embed/AQNe83Cwp1M',
+    preview: {
+      characters: [
+        { name: 'Avicennia marina', type: 'Avicennia marina' }
+      ],
+      knowledge: [
+        { en: '1. Avicennia marina has pencil-like pneumatophores that stick up from the mud.', zh: '1. 白骨壤有像铅笔一样从泥面伸出的指状呼吸根。' },
+        { en: '2. Pneumatophores help mangroves breathe in muddy, low-oxygen conditions.', zh: '2. 指状呼吸根帮助红树在缺氧泥滩环境中呼吸。' },
+        { en: '3. Carbon can be locked in mangrove mud because plant remains decompose slowly where there is little oxygen.', zh: '3. 红树林泥巴中氧气少，植物残体分解慢，所以碳可以被长期锁住。' }
+      ]
+    },
+    quiz: [
+      { 
+        q: { en: "What are Avicennia marina’s breathing roots called?", zh: "白骨壤的呼吸根叫什么？" }, 
+        options: { 
+          en: ["Pneumatophores (finger-like roots)", "Stilt roots", "Buttress roots", "Aerial roots"],
+          zh: ["指状呼吸根", "支柱根", "板状根", "气生根"] 
+        }, 
+        correct: 0, 
+        exp: { en: "They are called Pneumatophores (finger-like roots).", zh: "它们被称为指状呼吸根。" } 
+      },
+      { 
+        q: { en: "Why do plant remains turn into peat in mangrove mud?", zh: "为什么植物残体在红树林泥巴中会变成泥炭？" }, 
+        options: { 
+          en: ["There is no oxygen in the mud", "There is too much sunlight", "There are many animals", "The mud is very dry"],
+          zh: ["泥巴中没有氧气", "阳光太充足", "有很多动物", "泥巴非常干燥"] 
+        }, 
+        correct: 0, 
+        exp: { en: "Because there is no oxygen in the mud.", zh: "因为泥巴中缺氧，分解缓慢。" } 
+      },
+      { 
+        q: { en: "One hectare of mangroves store 3-5 times more carbon than tropical rainforest.", zh: "一公顷红树林储存的碳是热带雨林的3-5倍。" }, 
+        options: { en: ["True", "False"], zh: ["正确", "错误"] }, 
+        correct: 0, 
+        exp: { en: "True.", zh: "正确。" } 
+      },
+      { 
+        q: { en: "Where is carbon locked and stored in mangroves for thousands of years?", zh: "在红树林中，碳被锁定并储存数千年的地方是哪里？" }, 
+        options: { 
+          en: ["Tree leaves", "Branches", "Peat layer/mud", "Flowers"],
+          zh: ["树叶", "树枝", "泥炭层/泥巴", "花朵"] 
+        }, 
+        correct: 2, 
+        exp: { en: "Carbon is locked in the Peat layer/mud.", zh: "碳被储存在泥炭层/泥巴中。" } 
+      },
+      { 
+        q: { en: "Hong Kong’s mangroves store carbon equal to the emission of 100,000 cars driving for a whole year.", zh: "香港红树林储存的碳相当于10万辆汽车行驶一整年的排放量。" }, 
+        options: { en: ["True", "False"], zh: ["正确", "错误"] }, 
+        correct: 0, 
+        exp: { en: "True.", zh: "正确。" } 
+      }
+    ]
   }
 ];
 
-const MOCK_FRIENDS = [
+const MOCK_FRIENDS: Friend[] = [
   { id: 1, name: 'Ocean Breeze', points: 1250, streak: 12, avatarColor: 'bg-sky-400' },
   { id: 2, name: 'Eco Warrior', points: 980, streak: 5, avatarColor: 'bg-indigo-400' },
   { id: 3, name: 'Carbon Master', points: 850, streak: 3, avatarColor: 'bg-blue-400' },
 ];
 
 // ================= COMPONENTS =================
-const BottomNav = ({ currentTab, setCurrentTab, t }: any) => (
+const BottomNav: React.FC<BottomNavProps> = ({ currentTab, setCurrentTab, t }) => (
   <div className="bg-white border-t border-slate-100 px-6 py-3 flex justify-between items-center pb-safe z-20 shrink-0 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
     {[
       { id: 'home', icon: Home, label: t.navHome },
@@ -304,8 +499,8 @@ const BottomNav = ({ currentTab, setCurrentTab, t }: any) => (
   </div>
 );
 
-const HerrySprite = ({ mood = 'happy', className = 'w-32 h-32' }: any) => {
-  const animation: any = mood === 'excited'
+const HerrySprite: React.FC<HerrySpriteProps> = ({ mood = 'happy', className = 'w-32 h-32' }) => {
+  const animation = mood === 'excited'
     ? { y: [0, -15, 0], scale: [1, 1.05, 1], transition: { repeat: Infinity, duration: 0.6 } }
     : mood === 'sad'
     ? { y: 5, scale: 0.95, transition: { duration: 0.3 } }
@@ -322,31 +517,31 @@ const HerrySprite = ({ mood = 'happy', className = 'w-32 h-32' }: any) => {
 
 // ================= MAIN APP =================
 export default function BlueCarbonApp() {
-  const [lang, setLang] = useState<string>('en');
-  const t = dict[lang as keyof typeof dict];
+  const [lang, setLang] = useState<'en' | 'zh'>('en');
+  const t = dict[lang];
 
   const [currentTab, setCurrentTab] = useState<string>('home');
   const [points, setPoints] = useState<number>(1200);
   const [currentLevel, setCurrentLevel] = useState<number>(1);
 
   const [activeHomeModal, setActiveHomeModal] = useState<string | null>(null);
-  const [selectedBadge, setSelectedBadge] = useState<any>(null);
+  const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
 
   const [streak, setStreak] = useState<number>(3);
   const [hasCheckedIn, setHasCheckedIn] = useState<boolean>(false);
 
   const [plantDays, setPlantDays] = useState<number>(0);
   const [currentSpeciesIdx, setCurrentSpeciesIdx] = useState<number>(0);
-  const [forest, setForest] = useState<any[]>([]);
+  const [forest, setForest] = useState<Species[]>([]);
 
   const [advTab, setAdvTab] = useState<string>('self');
 
-  const [activeLevel, setActiveLevel] = useState<any>(null);
+  const [activeLevel, setActiveLevel] = useState<Level | null>(null);
   const [lessonPhase, setLessonPhase] = useState<string>('preview');
   const [qIndex, setQIndex] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [quizState, setQuizState] = useState<string>('answering');
-  const [spriteMood, setSpriteMood] = useState<string>('happy');
+  const [spriteMood, setSpriteMood] = useState<'happy' | 'excited' | 'sad'>('happy');
   
   const [preQuizScore, setPreQuizScore] = useState<number>(0);
   const [postQuizScore, setPostQuizScore] = useState<number>(0);
@@ -397,15 +592,17 @@ export default function BlueCarbonApp() {
   const startLevel = (levelId: number) => {
     if (levelId > currentLevel) return;
     const level = LEVELS_DATA.find((l) => l.id === levelId);
-    setActiveLevel(level);
-    setLessonPhase('preview');
-    setQIndex(0);
-    setSelectedOption(null);
-    setQuizState('answering');
-    setPreQuizScore(0);
-    setPostQuizScore(0);
-    setCurrentTab('lesson');
-    setSpriteMood('happy');
+    if (level) {
+      setActiveLevel(level);
+      setLessonPhase('preview');
+      setQIndex(0);
+      setSelectedOption(null);
+      setQuizState('answering');
+      setPreQuizScore(0);
+      setPostQuizScore(0);
+      setCurrentTab('lesson');
+      setSpriteMood('happy');
+    }
   };
 
   const submitAnswer = () => {
@@ -836,7 +1033,7 @@ export default function BlueCarbonApp() {
                     <div className="mb-6">
                       <h3 className="text-sm font-bold text-blue-600 mb-3 uppercase tracking-wider">{t.characters}</h3>
                       <div className="flex overflow-x-auto space-x-4 pb-2">
-                        {activeLevel.preview.characters.map((char: any, idx: number) => (
+                        {activeLevel.preview.characters.map((char: Character, idx: number) => (
                           <div key={idx} className="shrink-0 flex flex-col items-center bg-slate-50 p-3 rounded-xl border border-slate-100 w-32">
                             <div className="flex space-x-2 mb-2">
                               <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-400">
@@ -856,7 +1053,7 @@ export default function BlueCarbonApp() {
                     <div className="mb-6">
                       <h3 className="text-sm font-bold text-blue-600 mb-3 uppercase tracking-wider">{t.coreKnowledge}</h3>
                       <div className="space-y-3">
-                        {activeLevel.preview.knowledge.map((k: any, idx: number) => (
+                        {activeLevel.preview.knowledge.map((k: LocalizedString, idx: number) => (
                           <div key={idx} className="bg-blue-50 p-4 rounded-xl border border-blue-100">
                             <p className="text-sm text-slate-700 font-medium leading-relaxed">{lang === 'en' ? k.en : k.zh}</p>
                           </div>
