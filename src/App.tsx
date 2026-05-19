@@ -81,7 +81,16 @@ const dict = {
     checkInSuccess: 'Checked in successfully!',
     checkInBtn: 'Check In',
     noBadges: 'No badges unlocked yet.',
-    characters: 'Characters'
+    characters: 'Characters',
+    videoHint: 'Watch the video to uncover the secrets!',
+    phase0: '0. Preview',
+    phase1: '1. Pre-Class Quiz',
+    phase2: '2. Video Lesson',
+    phase3: '3. Post-Class Quiz',
+    phase4: '4. Results',
+    unlockedStatus: 'Unlocked',
+    lockedStatus: 'Locked',
+    streakText: 'Streak:'
   },
   zh: {
     appTitle: '蓝碳守护者',
@@ -155,7 +164,16 @@ const dict = {
     checkInSuccess: '打卡成功！',
     checkInBtn: '打卡',
     noBadges: '暂未解锁任何徽章。',
-    characters: '主角'
+    characters: '主角',
+    videoHint: '观看视频，揭开蓝碳的秘密吧！',
+    phase0: '0. 知识预览',
+    phase1: '1. 课前测试',
+    phase2: '2. 视频课程',
+    phase3: '3. 课后测试',
+    phase4: '4. 学习成果',
+    unlockedStatus: '已解锁',
+    lockedStatus: '未解锁',
+    streakText: '连续打卡:'
   }
 };
 
@@ -253,121 +271,6 @@ const LEVELS_DATA = [
         exp: { en: "True.", zh: "正确。" } 
       }
     ]
-  },
-  {
-    id: 2,
-    title: 'Lesson 2',
-    subtitle: 'Kandelia obovata: The Coast Guard | 秋茄：海岸卫士',
-    videoUrl: 'https://www.youtube.com/embed/AQNe83Cwp1M',
-    preview: {
-      characters: [
-        { name: 'Mother Kandelia', type: 'Kandelia' },
-        { name: 'Kandy', type: 'Kandelia seedling' }
-      ],
-      knowledge: [
-        { en: '1. Kandelia obovata is one of the most common mangrove plants in Hong Kong.', zh: '1. 秋茄是香港最常见的红树林植物之一。' },
-        { en: '2. Its stilt roots hold the mudflat firmly and help break up wave energy.', zh: '2. 秋茄的支柱根可以牢牢抓住泥滩，并帮助分散海浪力量。' },
-        { en: '3. Kandelia obovata is viviparous: its seed sprouts on the tree and grows a long hypocotyl before falling.', zh: '3. 秋茄具有胎生现象，种子在树上发芽，长出长长的胚轴后再掉落。' }
-      ]
-    },
-    quiz: [
-      { 
-        q: { en: "What special power do Kandelia obovata’s stilt roots have?", zh: "秋茄的支柱根有什么特殊能力？" }, 
-        options: { 
-          en: ["They can fly", "They can hold the mudflat firmly and stop wind waves", "They produce sweet fruits", "They glow in the dark"],
-          zh: ["它们会飞", "它们能牢牢抓住泥滩并阻挡风浪", "它们结出甜美的果实", "它们在黑暗中发光"] 
-        }, 
-        correct: 1, 
-        exp: { en: "They can hold the mudflat firmly and stop wind waves.", zh: "它们能牢牢抓住泥滩并阻挡风浪。" } 
-      },
-      { 
-        q: { en: "What is Kandelia obovata called in mangroves?", zh: "秋茄在红树林中被称为什么？" }, 
-        options: { 
-          en: ["Breathing experts", "Coast Guard", "Carbon storage expert", "Flower guardian"],
-          zh: ["呼吸专家", "海岸卫士", "碳储藏专家", "护花使者"] 
-        }, 
-        correct: 1, 
-        exp: { en: "It is known as the Coast Guard.", zh: "它被称为海岸卫士。" } 
-      },
-      { 
-        q: { en: "Kandelia obovata is a viviparous plant.", zh: "秋茄是胎生植物。" }, 
-        options: { en: ["True", "False"], zh: ["正确", "错误"] }, 
-        correct: 0, 
-        exp: { en: "True. Its seed sprouts on the tree.", zh: "正确。它的种子在树上发芽。" } 
-      },
-      { 
-        q: { en: "Which animal can jump around on the mangrove mudflat?", zh: "哪种动物可以在红树林泥滩上跳来跳去？" }, 
-        options: { 
-          en: ["Fiddler crab", "Mudskipper", "Little egret", "Sparrow"],
-          zh: ["招潮蟹", "弹涂鱼", "小白鹭", "麻雀"] 
-        }, 
-        correct: 1, 
-        exp: { en: "Mudskippers jump around on the mudflat.", zh: "弹涂鱼在泥滩上跳来跳去。" } 
-      },
-      { 
-        q: { en: "Mangroves can stop wind and waves to protect the coast.", zh: "红树林可以阻挡风浪以保护海岸。" }, 
-        options: { en: ["True", "False"], zh: ["正确", "错误"] }, 
-        correct: 0, 
-        exp: { en: "True.", zh: "正确。" } 
-      }
-    ]
-  },
-  {
-    id: 3,
-    title: 'Lesson 3',
-    subtitle: 'Avicennia marina: The Breathing Expert | 白骨壤：呼吸专家',
-    videoUrl: 'https://www.youtube.com/embed/AQNe83Cwp1M',
-    preview: {
-      characters: [
-        { name: 'Avicennia marina', type: 'Avicennia marina' }
-      ],
-      knowledge: [
-        { en: '1. Avicennia marina has pencil-like pneumatophores that stick up from the mud.', zh: '1. 白骨壤有像铅笔一样从泥面伸出的指状呼吸根。' },
-        { en: '2. Pneumatophores help mangroves breathe in muddy, low-oxygen conditions.', zh: '2. 指状呼吸根帮助红树在缺氧泥滩环境中呼吸。' },
-        { en: '3. Carbon can be locked in mangrove mud because plant remains decompose slowly where there is little oxygen.', zh: '3. 红树林泥巴中氧气少，植物残体分解慢，所以碳可以被长期锁住。' }
-      ]
-    },
-    quiz: [
-      { 
-        q: { en: "What are Avicennia marina’s breathing roots called?", zh: "白骨壤的呼吸根叫什么？" }, 
-        options: { 
-          en: ["Pneumatophores", "Stilt roots", "Tap roots", "Aerial roots"],
-          zh: ["指状呼吸根", "支柱根", "主根", "气生根"] 
-        }, 
-        correct: 0, 
-        exp: { en: "They are called pneumatophores (finger-like roots).", zh: "它们被称为指状呼吸根。" } 
-      },
-      { 
-        q: { en: "Why do plant remains turn into peat in mangrove mud?", zh: "为什么植物残体在红树林泥巴中会变成泥炭？" }, 
-        options: { 
-          en: ["There is no oxygen in the mud", "There is too much sunlight", "There are many animals", "The mud is very dry"],
-          zh: ["泥巴里没有氧气", "阳光太多", "动物很多", "泥巴很干"] 
-        }, 
-        correct: 0, 
-        exp: { en: "There is no oxygen in the mud.", zh: "泥巴里没有氧气。" } 
-      },
-      { 
-        q: { en: "One hectare of mangroves store 3-5 times more carbon than tropical rainforest.", zh: "一公顷红树林储存的碳是热带雨林的3-5倍。" }, 
-        options: { en: ["True", "False"], zh: ["正确", "错误"] }, 
-        correct: 0, 
-        exp: { en: "True.", zh: "正确。" } 
-      },
-      { 
-        q: { en: "Where is carbon locked and stored in mangroves for thousands of years?", zh: "碳在红树林中被锁定和储存数千年的地方是哪里？" }, 
-        options: { 
-          en: ["Tree leaves", "Branches", "Peat layer/mud", "Flowers"],
-          zh: ["树叶", "树枝", "泥炭层/泥巴", "花朵"] 
-        }, 
-        correct: 2, 
-        exp: { en: "In the peat layer/mud.", zh: "在泥炭层/泥巴中。" } 
-      },
-      { 
-        q: { en: "Hong Kong’s mangroves store carbon equal to the emission of 100,000 cars driving for a whole year.", zh: "香港红树林储存的碳相当于10万辆汽车开一整年的排放量。" }, 
-        options: { en: ["True", "False"], zh: ["正确", "错误"] }, 
-        correct: 0, 
-        exp: { en: "True.", zh: "正确。" } 
-      }
-    ]
   }
 ];
 
@@ -378,7 +281,7 @@ const MOCK_FRIENDS = [
 ];
 
 // ================= COMPONENTS =================
-const BottomNav = ({ currentTab, setCurrentTab, t }) => (
+const BottomNav = ({ currentTab, setCurrentTab, t }: any) => (
   <div className="bg-white border-t border-slate-100 px-6 py-3 flex justify-between items-center pb-safe z-20 shrink-0 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
     {[
       { id: 'home', icon: Home, label: t.navHome },
@@ -401,8 +304,8 @@ const BottomNav = ({ currentTab, setCurrentTab, t }) => (
   </div>
 );
 
-const HerrySprite = ({ mood = 'happy', className = 'w-32 h-32' }) => {
-  const animation = mood === 'excited'
+const HerrySprite = ({ mood = 'happy', className = 'w-32 h-32' }: any) => {
+  const animation: any = mood === 'excited'
     ? { y: [0, -15, 0], scale: [1, 1.05, 1], transition: { repeat: Infinity, duration: 0.6 } }
     : mood === 'sad'
     ? { y: 5, scale: 0.95, transition: { duration: 0.3 } }
@@ -419,54 +322,46 @@ const HerrySprite = ({ mood = 'happy', className = 'w-32 h-32' }) => {
 
 // ================= MAIN APP =================
 export default function BlueCarbonApp() {
-  const [lang, setLang] = useState('en');
-  const t = dict[lang];
+  const [lang, setLang] = useState<string>('en');
+  const t = dict[lang as keyof typeof dict];
 
-  const [currentTab, setCurrentTab] = useState('home');
-  const [points, setPoints] = useState(1200);
-  const [currentLevel, setCurrentLevel] = useState(1);
+  const [currentTab, setCurrentTab] = useState<string>('home');
+  const [points, setPoints] = useState<number>(1200);
+  const [currentLevel, setCurrentLevel] = useState<number>(1);
 
-  // Home Modals
-  const [activeHomeModal, setActiveHomeModal] = useState(null); // 'planting', 'badges'
-  const [selectedBadge, setSelectedBadge] = useState(null);
+  const [activeHomeModal, setActiveHomeModal] = useState<string | null>(null);
+  const [selectedBadge, setSelectedBadge] = useState<any>(null);
 
-  // Daily Mission State
-  const [streak, setStreak] = useState(3);
-  const [hasCheckedIn, setHasCheckedIn] = useState(false);
+  const [streak, setStreak] = useState<number>(3);
+  const [hasCheckedIn, setHasCheckedIn] = useState<boolean>(false);
 
-  // Planting Game State
-  const [plantDays, setPlantDays] = useState(0);
-  const [currentSpeciesIdx, setCurrentSpeciesIdx] = useState(0);
-  const [forest, setForest] = useState([]);
+  const [plantDays, setPlantDays] = useState<number>(0);
+  const [currentSpeciesIdx, setCurrentSpeciesIdx] = useState<number>(0);
+  const [forest, setForest] = useState<any[]>([]);
 
-  // Adventure Tab State
-  const [advTab, setAdvTab] = useState('self');
+  const [advTab, setAdvTab] = useState<string>('self');
 
-  // Lesson State
-  const [activeLevel, setActiveLevel] = useState(null);
-  const [lessonPhase, setLessonPhase] = useState('preview'); // preview -> pre-quiz -> video -> post-quiz -> comparison
-  const [qIndex, setQIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [quizState, setQuizState] = useState('answering'); // answering -> result
-  const [spriteMood, setSpriteMood] = useState('happy');
+  const [activeLevel, setActiveLevel] = useState<any>(null);
+  const [lessonPhase, setLessonPhase] = useState<string>('preview');
+  const [qIndex, setQIndex] = useState<number>(0);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [quizState, setQuizState] = useState<string>('answering');
+  const [spriteMood, setSpriteMood] = useState<string>('happy');
   
-  // Quiz Scores
-  const [preQuizScore, setPreQuizScore] = useState(0);
-  const [postQuizScore, setPostQuizScore] = useState(0);
+  const [preQuizScore, setPreQuizScore] = useState<number>(0);
+  const [postQuizScore, setPostQuizScore] = useState<number>(0);
 
-  // Video Timer
-  const [videoTimeLeft, setVideoTimeLeft] = useState(120);
+  const [videoTimeLeft, setVideoTimeLeft] = useState<number>(120);
 
-  // Shop Toast State
-  const [toast, setToast] = useState(null);
+  const [toast, setToast] = useState<{msg: string, type: string} | null>(null);
 
-  const showToast = (msg, type = 'success') => {
+  const showToast = (msg: string, type: string = 'success') => {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 2000);
   };
 
   const handleWater = () => {
-    if (plantDays < 60) setPlantDays(prev => prev + 1); // 1 day per click
+    if (plantDays < 60) setPlantDays(prev => prev + 1);
   };
 
   const handleHarvest = () => {
@@ -484,7 +379,7 @@ export default function BlueCarbonApp() {
     }
   };
 
-  const buyItem = (price) => {
+  const buyItem = (price: number) => {
     if (points >= price) {
       setPoints(p => p - price);
       showToast(t.successMsg, 'success');
@@ -499,7 +394,7 @@ export default function BlueCarbonApp() {
     return { phase: t.plantTree, icon: <TreeDeciduous size={72} className="text-emerald-700" /> };
   };
 
-  const startLevel = (levelId) => {
+  const startLevel = (levelId: number) => {
     if (levelId > currentLevel) return;
     const level = LEVELS_DATA.find((l) => l.id === levelId);
     setActiveLevel(level);
@@ -514,7 +409,7 @@ export default function BlueCarbonApp() {
   };
 
   const submitAnswer = () => {
-    if (selectedOption === null) return;
+    if (selectedOption === null || !activeLevel) return;
     setQuizState('result');
     const isCorrect = selectedOption === activeLevel.quiz[qIndex].correct;
     if (isCorrect) {
@@ -527,6 +422,7 @@ export default function BlueCarbonApp() {
   };
 
   const nextStep = () => {
+    if (!activeLevel) return;
     if (qIndex < activeLevel.quiz.length - 1) {
       setQIndex(q => q + 1);
       setSelectedOption(null);
@@ -548,9 +444,9 @@ export default function BlueCarbonApp() {
   };
 
   useEffect(() => {
-    let timer;
+    let timer: ReturnType<typeof setInterval>;
     if (lessonPhase === 'video' && videoTimeLeft > 0) {
-      timer = setInterval(() => setVideoTimeLeft(t => t - 1), 1000);
+      timer = setInterval(() => setVideoTimeLeft(time => time - 1), 1000);
     }
     return () => clearInterval(timer);
   }, [lessonPhase, videoTimeLeft]);
@@ -568,7 +464,7 @@ export default function BlueCarbonApp() {
             <div>
               <h1 className="font-bold text-lg leading-tight tracking-wide">{t.appTitle}</h1>
               <p className="text-xs text-sky-100 opacity-90">
-                {t.guardianLv.replace('{lvl}', currentLevel)}
+                {t.guardianLv.replace('{lvl}', currentLevel.toString())}
               </p>
             </div>
           </div>
@@ -602,9 +498,9 @@ export default function BlueCarbonApp() {
             
             {/* ================= HOME TAB ================= */}
             {currentTab === 'home' && (
-              <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-5 space-y-6 h-full w-full overflow-y-auto">
+              <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 overflow-y-auto p-5 space-y-6">
                 
-                {/* Planting Game Module (Read-only on Home) */}
+                {/* Planting Game Module */}
                 <div 
                   onClick={() => setActiveHomeModal('planting')}
                   className="bg-gradient-to-b from-sky-50 to-blue-50 rounded-3xl p-6 border border-blue-100 shadow-sm relative cursor-pointer hover:shadow-md transition-shadow"
@@ -632,7 +528,7 @@ export default function BlueCarbonApp() {
                   </div>
                 </div>
 
-                {/* Daily Mission (Auto Check-in) */}
+                {/* Daily Mission */}
                 <div className="bg-white rounded-2xl p-5 shadow-sm border border-blue-100">
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="font-bold text-slate-800 flex items-center text-lg">
@@ -665,7 +561,6 @@ export default function BlueCarbonApp() {
                     </button>
                   </div>
 
-                  {/* 7-Day Streak Tracker */}
                   <div className="flex justify-between mt-4">
                     {[0, 1, 2, 3, 4, 5, 6].map((day) => {
                       const isPast = day < streak - (hasCheckedIn ? 1 : 0);
@@ -698,7 +593,7 @@ export default function BlueCarbonApp() {
                   </div>
                 </div>
 
-                {/* Badges Module (Unlocked Only) */}
+                {/* Badges Module */}
                 <div 
                   onClick={() => setActiveHomeModal('badges')}
                   className="bg-white rounded-2xl p-5 shadow-sm border border-blue-100 cursor-pointer hover:shadow-md transition-shadow relative"
@@ -730,7 +625,7 @@ export default function BlueCarbonApp() {
 
             {/* ================= ADVENTURE TAB ================= */}
             {currentTab === 'map' && (
-              <motion.div key="map" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-5 h-full w-full overflow-y-auto bg-sky-50 relative"
+              <motion.div key="map" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 overflow-y-auto p-5 bg-sky-50"
                 style={{ backgroundImage: 'radial-gradient(#bae6fd 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
                 
                 <div className="flex bg-white/80 backdrop-blur p-1 rounded-xl shadow-sm mb-6 border border-blue-100">
@@ -794,9 +689,9 @@ export default function BlueCarbonApp() {
               </motion.div>
             )}
 
-            {/* ================= COMMUNITY, SHOP, SETTINGS ================= */}
+            {/* ================= COMMUNITY ================= */}
             {currentTab === 'community' && (
-              <motion.div key="community" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-5 space-y-6 h-full w-full overflow-y-auto">
+              <motion.div key="community" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 overflow-y-auto p-5 space-y-6">
                 <div className="bg-gradient-to-r from-indigo-500 to-blue-500 rounded-2xl p-5 text-white shadow-lg flex justify-between items-center">
                   <div>
                     <h2 className="font-bold text-lg">{t.myRank}</h2>
@@ -828,7 +723,7 @@ export default function BlueCarbonApp() {
                           <div>
                             <div className="font-bold text-sm text-slate-700">{friend.name}</div>
                             <div className="text-[10px] text-slate-500 flex items-center mt-0.5">
-                              Streak: {friend.streak} {t.days} <Flame size={10} className="text-orange-400 ml-1" />
+                              {t.streakText} {friend.streak} {t.days} <Flame size={10} className="text-orange-400 ml-1" />
                             </div>
                           </div>
                         </div>
@@ -842,8 +737,9 @@ export default function BlueCarbonApp() {
               </motion.div>
             )}
 
+            {/* ================= SHOP ================= */}
             {currentTab === 'shop' && (
-              <motion.div key="shop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-5 h-full w-full overflow-y-auto">
+              <motion.div key="shop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 overflow-y-auto p-5">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="font-bold text-xl text-slate-800 flex items-center">
                     <Store size={24} className="text-blue-500 mr-2" /> {t.shopTitle}
@@ -875,8 +771,9 @@ export default function BlueCarbonApp() {
               </motion.div>
             )}
 
+            {/* ================= SETTINGS ================= */}
             {currentTab === 'settings' && (
-              <motion.div key="settings" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="p-5 space-y-4 h-full w-full overflow-y-auto">
+              <motion.div key="settings" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 overflow-y-auto p-5 space-y-4">
                 <h2 className="font-bold text-xl text-slate-800 mb-6">{t.settingsTitle}</h2>
                 
                 <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
@@ -911,14 +808,14 @@ export default function BlueCarbonApp() {
 
             {/* ================= LESSON FLOW TAB ================= */}
             {currentTab === 'lesson' && activeLevel && (
-              <motion.div key="lesson" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="p-6 h-full w-full flex flex-col bg-white overflow-y-auto">
+              <motion.div key="lesson" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="absolute inset-0 p-6 flex flex-col bg-white overflow-y-auto">
                 
                 {/* Progress Indicator */}
                 <div className="mb-6 shrink-0">
                   <div className="flex justify-between text-xs font-bold text-slate-400 mb-2">
                     <span>{activeLevel.title}</span>
                     <span className="text-blue-600">
-                      {lessonPhase === 'preview' ? '0. Preview' : lessonPhase === 'pre-quiz' ? '1. Pre-Class Quiz' : lessonPhase === 'video' ? '2. Video Lesson' : lessonPhase === 'post-quiz' ? '3. Post-Class Quiz' : '4. Results'}
+                      {lessonPhase === 'preview' ? t.phase0 : lessonPhase === 'pre-quiz' ? t.phase1 : lessonPhase === 'video' ? t.phase2 : lessonPhase === 'post-quiz' ? t.phase3 : t.phase4}
                     </span>
                   </div>
                   <div className="flex space-x-1">
@@ -939,10 +836,9 @@ export default function BlueCarbonApp() {
                     <div className="mb-6">
                       <h3 className="text-sm font-bold text-blue-600 mb-3 uppercase tracking-wider">{t.characters}</h3>
                       <div className="flex overflow-x-auto space-x-4 pb-2">
-                        {activeLevel.preview.characters.map((char, idx) => (
+                        {activeLevel.preview.characters.map((char: any, idx: number) => (
                           <div key={idx} className="shrink-0 flex flex-col items-center bg-slate-50 p-3 rounded-xl border border-slate-100 w-32">
                             <div className="flex space-x-2 mb-2">
-                              {/* Placeholders for Image and Real Photo */}
                               <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-400">
                                 <ImageIcon size={20} />
                               </div>
@@ -960,7 +856,7 @@ export default function BlueCarbonApp() {
                     <div className="mb-6">
                       <h3 className="text-sm font-bold text-blue-600 mb-3 uppercase tracking-wider">{t.coreKnowledge}</h3>
                       <div className="space-y-3">
-                        {activeLevel.preview.knowledge.map((k, idx) => (
+                        {activeLevel.preview.knowledge.map((k: any, idx: number) => (
                           <div key={idx} className="bg-blue-50 p-4 rounded-xl border border-blue-100">
                             <p className="text-sm text-slate-700 font-medium leading-relaxed">{lang === 'en' ? k.en : k.zh}</p>
                           </div>
@@ -985,7 +881,7 @@ export default function BlueCarbonApp() {
                       </h2>
                     </div>
                     <div className="space-y-3 flex-1">
-                      {(lang === 'en' ? activeLevel.quiz[qIndex].options.en : activeLevel.quiz[qIndex].options.zh).map((opt, idx) => {
+                      {(lang === 'en' ? activeLevel.quiz[qIndex].options.en : activeLevel.quiz[qIndex].options.zh).map((opt: string, idx: number) => {
                         let btnClass = 'w-full text-left p-4 rounded-2xl border-2 transition-all font-medium ';
                         const isCorrectOpt = idx === activeLevel.quiz[qIndex].correct;
                         if (quizState === 'answering') {
@@ -1044,7 +940,7 @@ export default function BlueCarbonApp() {
                 {lessonPhase === 'video' && (
                   <div className="flex-1 flex flex-col">
                     <h2 className="text-xl font-bold text-slate-800 mb-2">{activeLevel.subtitle.split(' | ')[lang === 'en' ? 0 : 1]}</h2>
-                    <p className="text-sm text-slate-500 mb-6">Watch the video to uncover the secrets!</p>
+                    <p className="text-sm text-slate-500 mb-6">{t.videoHint}</p>
                     <div className="w-full bg-black rounded-2xl overflow-hidden shadow-lg aspect-video flex items-center justify-center relative">
                       <iframe width="100%" height="100%" src={activeLevel.videoUrl} title="YouTube video player" frameBorder="0" allowFullScreen></iframe>
                     </div>
@@ -1054,7 +950,7 @@ export default function BlueCarbonApp() {
                         disabled={videoTimeLeft > 0}
                         className={`w-full py-4 rounded-2xl font-bold text-lg flex justify-center items-center transition-all ${videoTimeLeft > 0 ? 'bg-slate-200 text-slate-400' : 'bg-blue-600 text-white shadow-lg shadow-blue-200 active:scale-95'}`}
                       >
-                        {videoTimeLeft > 0 ? t.videoWait.replace('{time}', videoTimeLeft) : t.startPostQuiz}
+                        {videoTimeLeft > 0 ? t.videoWait.replace('{time}', videoTimeLeft.toString()) : t.startPostQuiz}
                         {videoTimeLeft <= 0 && <ChevronRight size={20} className="ml-1" />}
                       </button>
                     </div>
@@ -1110,7 +1006,6 @@ export default function BlueCarbonApp() {
               initial={{ opacity: 0, y: '100%' }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: '100%' }}
               className="absolute inset-0 z-50 bg-gradient-to-b from-sky-100 to-green-100 flex flex-col"
             >
-              {/* Header */}
               <div className="p-4 flex items-center bg-white/50 backdrop-blur-md border-b border-white/50 sticky top-0 z-20">
                 <button onClick={() => setActiveHomeModal(null)} className="p-2 bg-white rounded-full shadow-sm text-slate-600 mr-3">
                   <ArrowLeft size={20} />
@@ -1118,10 +1013,9 @@ export default function BlueCarbonApp() {
                 <h2 className="font-bold text-green-900 text-lg">{t.myForest}</h2>
               </div>
 
-              {/* Background Forest */}
               <div className="absolute inset-0 z-0 opacity-40 pointer-events-none overflow-hidden pt-20">
                 <div className="flex flex-wrap gap-4 p-6 justify-center">
-                  {forest.map((tree, idx) => (
+                  {forest.map((_, idx) => (
                     <div key={idx} className="flex flex-col items-center">
                       <TreeDeciduous size={40} className="text-emerald-700" />
                     </div>
@@ -1129,9 +1023,8 @@ export default function BlueCarbonApp() {
                 </div>
               </div>
 
-              {/* Foreground Current Plant */}
               <div className="flex-1 relative z-10 flex flex-col items-center justify-center p-6">
-                <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}>
+                <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" } as any}>
                   {getPlantState().icon}
                 </motion.div>
                 
@@ -1230,7 +1123,7 @@ export default function BlueCarbonApp() {
                       </h3>
                       
                       <div className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold mb-6 ${selectedBadge.unlocked ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'}`}>
-                        {selectedBadge.unlocked ? 'Unlocked' : 'Locked'}
+                        {selectedBadge.unlocked ? t.unlockedStatus : t.lockedStatus}
                       </div>
                       
                       <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-left">
