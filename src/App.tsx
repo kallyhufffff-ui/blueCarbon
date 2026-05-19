@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, TargetAndTransition } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence, type TargetAndTransition } from 'framer-motion';
 import {
   Home, Map as MapIcon, Users, CheckCircle, Lock, Star, ChevronRight,
   Droplets, Flame, XCircle, Medal, UserPlus, Trophy, Store, Settings as SettingsIcon,
