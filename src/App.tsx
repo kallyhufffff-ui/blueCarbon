@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, TargetAndTransition } from 'framer-motion';
 import {
   Home, Map as MapIcon, Users, CheckCircle, Lock, Star, ChevronRight,
   Droplets, Flame, XCircle, Medal, UserPlus, Trophy, Store, Settings as SettingsIcon,
@@ -500,11 +500,11 @@ const BottomNav: React.FC<BottomNavProps> = ({ currentTab, setCurrentTab, t }) =
 );
 
 const HerrySprite: React.FC<HerrySpriteProps> = ({ mood = 'happy', className = 'w-32 h-32' }) => {
-  const animation = mood === 'excited'
+  const animation: TargetAndTransition = mood === 'excited'
     ? { y: [0, -15, 0], scale: [1, 1.05, 1], transition: { repeat: Infinity, duration: 0.6 } }
     : mood === 'sad'
     ? { y: 5, scale: 0.95, transition: { duration: 0.3 } }
-    : { y: [0, -6, 0], transition: { repeat: Infinity, duration: 2.5, ease: 'easeInOut' } };
+    : { y: [0, -6, 0], transition: { repeat: Infinity, duration: 2.5, ease: 'easeInOut' as const } };
 
   return (
     <motion.div animate={animation} className={`${className} mx-auto relative drop-shadow-xl flex justify-center items-center`}>
