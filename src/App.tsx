@@ -952,7 +952,7 @@ const HerrySprite = ({
       ? { y: 5, scale: 0.95, transition: { duration: 0.3 } }
       : {
           y: [0, -6, 0],
-          transition: { repeat: Infinity, duration: 2.5, ease: 'easeInOut' },
+          transition: { repeat: Infinity, duration: 2.5, ease: 'easeInOut' as const},
         };
 
   return (
@@ -2003,7 +2003,7 @@ export default function BlueCarbonApp() {
               <div className="flex-1 relative z-10 flex flex-col items-center justify-center p-6">
                 <motion.div
                   animate={{ y: [0, -10, 0] }}
-                  transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+                  transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' as const}}
                 >
                   {getPlantState().icon}
                 </motion.div>
