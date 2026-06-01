@@ -24,7 +24,6 @@ import {
   CircleHelp,
   Swords,
   Crown,
-  Image as ImageIcon,
   Info,
 } from 'lucide-react';
 
