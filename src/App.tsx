@@ -531,10 +531,10 @@ const LEVELS_DATA = [
     id: 1,
     title: 'Lesson 1',
     subtitle: {
-      en: 'What is Blue Carbon?',
-      zh: '什么是蓝碳？',
+      en: 'What is the Mysterious "Blue Carbon"?',
+      zh: '什么是神秘的“蓝碳”？',
     },
-    videoUrl: 'https://www.youtube.com/embed/AQNe83Cwp1M',
+    videoUrl: 'https://www.youtube.com/embed/caAmisaAmE8',
     preview: {
       characters: [
         {
@@ -544,6 +544,7 @@ const LEVELS_DATA = [
               <span className="italic">Heritiera littoralis</span> fruit
             </>
           ),
+          images: ['/Herry-1.png', '/Herry-2.jpg']
         },
         {
           name: 'Kandy',
@@ -552,10 +553,15 @@ const LEVELS_DATA = [
               <span className="italic">Kandelia obovata</span> seedling
             </>
           ),
+          images: ['/Kandy-1.png', '/Kandy-2.jpg']
         },
         {
           name: 'Teacher',
           type: <span className="italic">Acrostichum aureum</span>,
+          images: ['/Teacher-1.png', '/Teacher-2.jpg']
+
+          
+          
         },
       ],
       knowledge: [
@@ -674,27 +680,16 @@ const LEVELS_DATA = [
     id: 2,
     title: 'Lesson 2',
     subtitle: {
-      en: (
-        <>
-          <span className="italic">Kandelia obovata</span>: The Coast Guard
-        </>
-      ),
-      zh: '秋茄：海岸卫士',
+      en: 'Mangroves: The Superheroes of the Coast',
+      zh: '红树林：保卫海岸的超级英雄',
     },
-    videoUrl: 'https://www.youtube.com/embed/AQNe83Cwp1M',
+    videoUrl: 'https://www.youtube.com/embed/wNo82IEXCf4',
     preview: {
       characters: [
         {
           name: 'Mother Kandelia',
           type: <span className="italic">Kandelia obovata</span>,
-        },
-        {
-          name: 'Kandy',
-          type: (
-            <>
-              <span className="italic">Kandelia obovata</span> seedling
-            </>
-          ),
+          images: ['/Mother_Kandelia-1.png', '/Mother_Kandelia-2.jpg']
         },
       ],
       knowledge: [
@@ -827,19 +822,17 @@ const LEVELS_DATA = [
     id: 3,
     title: 'Lesson 3',
     subtitle: {
-      en: (
-        <>
-          <span className="italic">Avicennia marina</span>: The Breathing Expert
-        </>
-      ),
-      zh: '白骨壤：呼吸专家',
+      en: 'Where is the Carbon Storage Room?',
+      zh: '碳储藏室在哪里？',
     },
-    videoUrl: 'https://www.youtube.com/embed/AQNe83Cwp1M',
+    videoUrl: 'https://www.youtube.com/embed/9XILZsECOB0',
     preview: {
       characters: [
         {
           name: 'Avicennia marina',
           type: <span className="italic">Avicennia marina</span>,
+          images: ['/Avicennia-1.png', '/Avicennia-2.jpg']
+          
         },
       ],
       knowledge: [
@@ -1046,7 +1039,7 @@ export default function BlueCarbonApp() {
   const [preQuizScore, setPreQuizScore] = useState(0);
   const [postQuizScore, setPostQuizScore] = useState(0);
 
-  const [videoTimeLeft, setVideoTimeLeft] = useState(120);
+  const [videoTimeLeft, setVideoTimeLeft] = useState(60);
 
   const [toast, setToast] = useState<null | { msg: string; type: 'success' | 'error' }>(null);
 
@@ -1114,7 +1107,7 @@ export default function BlueCarbonApp() {
     setPostQuizScore(0);
     setCurrentTab('lesson');
     setSpriteMood('happy');
-    setVideoTimeLeft(120);
+    setVideoTimeLeft(60);
   };
 
   const submitAnswer = () => {
@@ -1142,7 +1135,7 @@ export default function BlueCarbonApp() {
     } else {
       if (lessonPhase === 'pre-quiz') {
         setLessonPhase('video');
-        setVideoTimeLeft(120);
+        setVideoTimeLeft(60);
         setSpriteMood('happy');
       } else if (lessonPhase === 'post-quiz') {
         setLessonPhase('comparison');
@@ -1679,30 +1672,36 @@ export default function BlueCarbonApp() {
                       </h3>
 
                       <div className="flex overflow-x-auto space-x-4 pb-2">
-                        {activeLevel.preview.characters.map((char, idx) => (
-                          <div
-                            key={idx}
-                            className="shrink-0 flex flex-col items-center bg-slate-50 p-3 rounded-xl border border-slate-100 w-32"
-                          >
-                            <div className="flex space-x-2 mb-2">
-                              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-400">
-                                <ImageIcon size={20} />
-                              </div>
-                              <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-400">
-                                <ImageIcon size={20} />
-                              </div>
-                            </div>
+  {activeLevel.preview.characters.map((char, idx) => (
+    <div
+      key={idx}
+      className="shrink-0 flex flex-col items-center bg-slate-50 p-3 rounded-xl border border-slate-100 w-32"
+    >
+      <div className="flex space-x-2 mb-2">
+        {char.images?.map((img, index) => (
+          <div
+            key={index}
+            className="w-10 h-10 rounded-lg overflow-hidden border border-slate-200 bg-slate-50"
+          >
+            <img
+              src={img}
+              alt={`${char.name} preview ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
 
-                            <span className="text-xs font-bold text-slate-700 text-center">
-                              {char.name}
-                            </span>
+      <span className="text-xs font-bold text-slate-700 text-center">
+        {char.name}
+      </span>
 
-                            <span className="text-[9px] text-slate-400 text-center mt-1">
-                              {char.type}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
+      <span className="text-[9px] text-slate-400 text-center mt-1">
+        {char.type}
+      </span>
+    </div>
+  ))}
+</div>
                     </div>
 
                     <div className="mb-6">
